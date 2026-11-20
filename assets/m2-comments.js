@@ -1,7 +1,6 @@
-/* M2 prototypes — zone commenting layer
- * Adds a "comments" mode: toggle it, click any block (section/card/blockquote…),
- * leave a comment pinned to that zone. Comments stored in Supabase.
- * Load AFTER the page's app.js. No framework, ~zero deps.
+/* M2 prototypes — zone commenting layer v3
+ * Access gate: page blurred until user enters team access code (RPC check).
+ * After login: name is fixed from team roster; every comment shows real author.
  */
 (() => {
   if (window.__m2Comments) return;
@@ -18,15 +17,81 @@
       const text = await r.text();
       return text ? JSON.parse(text) : null;
     },
-    list: (page, zone) => sb.req('/rest/v1/comments?select=id,author,zone_id,body,created_at,page_id&order=created_at.asc&page_id=eq.' + encodeURIComponent(page) + (zone ? '&zone_id=eq.' + encodeURIComponent(zone) : '')),
+    list: (page) => sb.req('/rest/v1/comments?select=id,author,zone_id,body,created_at,page_id&order=created_at.asc&page_id=eq.' + encodeURIComponent(page)),
     post: (c) => sb.req('/rest/v1/comments', { method: 'POST', body: JSON.stringify(c) }),
-    del: (id) => sb.req('/rest/v1/comments?id=eq.' + id, { method: 'DELETE' })
+    del: (id) => sb.req('/rest/v1/comments?id=eq.' + id, { method: 'DELETE' }),
+    checkCode: (code) => sb.req('/rest/v1/rpc/check_team_code', { method: 'POST', body: JSON.stringify({ p_code: code }) })
   };
 
-  const state = { on: false, comments: [], author: localStorage.getItem('m2c_author') || '' };
+  const state = { on: false, comments: [], user: JSON.parse(localStorage.getItem('m2c_user') || 'null') };
   let ui = {};
-
   const pageId = (location.pathname.replace(/\/index\.html$/, '').replace(/^\/|\/$/g, '') || 'index').replace(/\//g, '-');
+
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  /* ---------- ACCESS GATE ---------- */
+  function buildGate() {
+    if (state.user) return;
+    if (document.getElementById('m2c-gate')) return;
+    const css = document.createElement('style');
+    css.textContent = `
+#m2c-gate{position:fixed;inset:0;z-index:2147483100;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;font:14px/1.4 system-ui,sans-serif}
+.m2c-gate-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.12);padding:34px 38px;width:min(400px,92vw);text-align:center}
+.m2c-gate-card h3{margin:0 0 6px;font-size:20px;font-weight:600;color:#111}
+.m2c-gate-card p{margin:0 0 18px;color:#6b7280;font-size:13px}
+#m2c-code{width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:9px;padding:11px 13px;font:14px system-ui,sans-serif;text-align:center;margin-bottom:12px}
+#m2c-code.err{border-color:#ef4444}
+.m2c-gate-btn{background:#6d28d9;color:#fff;border:none;border-radius:9px;padding:11px 18px;cursor:pointer;font:500 14px system-ui,sans-serif;width:100%}
+.m2c-gate-hint{margin-top:12px;font-size:12px;color:#9ca3af}
+body.m2c-locked>#m2c-gate~*, body.m2c-locked>main, body.m2c-locked>header, body.m2c-locked>footer, body.m2c-locked>nav{filter:blur(7px);pointer-events:none;user-select:none}
+`;
+    document.head.appendChild(css);
+    document.body.classList.add('m2c-locked');
+    const g = document.createElement('div');
+    g.id = 'm2c-gate';
+    g.innerHTML = `
+<div class="m2c-gate-card">
+  <h3>Прототипы М2 · закрытый доступ</h3>
+  <p>Введите код доступа команды, чтобы просматривать страницы и оставлять комментарии.</p>
+  <input id="m2c-code" type="password" placeholder="Код доступа" autocomplete="off">
+  <button class="m2c-gate-btn" id="m2c-login">Войти</button>
+  <div class="m2c-gate-hint">Код выдаёт Екатерина</div>
+</div>`;
+    document.body.appendChild(g);
+    const input = g.querySelector('#m2c-code');
+    const btn = g.querySelector('#m2c-login');
+    const submit = async () => {
+      const code = input.value.trim();
+      if (!code) return;
+      btn.textContent = 'Проверяю…'; btn.disabled = true;
+      try {
+        const rows = await sb.checkCode(code);
+        if (rows && rows.length) {
+          state.user = { name: rows[0].name };
+          localStorage.setItem('m2c_user', JSON.stringify(state.user));
+          unlock();
+        } else {
+          input.classList.add('err');
+          btn.textContent = 'Войти';
+          btn.disabled = false;
+          input.focus(); input.select();
+        }
+      } catch (e) {
+        btn.textContent = 'Ошибка: ' + e.message;
+        btn.disabled = false;
+      }
+    };
+    btn.onclick = submit;
+    input.oninput = () => input.classList.remove('err');
+    input.onkeydown = (e) => { if (e.key === 'Enter') submit(); };
+    setTimeout(() => input.focus(), 100);
+  }
+
+  function unlock() {
+    document.body.classList.remove('m2c-locked');
+    const g = document.getElementById('m2c-gate');
+    if (g) g.remove();
+  }
 
   /* ---------- UI ---------- */
   function buildUI() {
@@ -36,18 +101,19 @@
 #m2c-toggle{position:fixed;right:18px;bottom:18px;z-index:2147483000;background:#6d28d9;color:#fff;border:none;border-radius:999px;padding:12px 20px;font:500 14px/1 system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 #m2c-toggle.on{background:#10b981}
 #m2c-count{background:rgba(255,255,255,.25);border-radius:999px;padding:2px 8px;margin-left:8px;font-size:12px}
+#m2c-who{position:fixed;right:18px;bottom:64px;z-index:2147483000;background:#f3f0ff;border:1px solid #ddd6fe;color:#5b21b6;border-radius:999px;padding:6px 14px;font:500 12px/1 system-ui,sans-serif;cursor:pointer}
 #m2c-panel{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:2147483001;background:#fff;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.3);padding:14px;width:min(420px,90vw);display:none;font:14px/1.4 system-ui,sans-serif;color:#111}
 #m2c-panel.open{display:block}
 #m2c-panel h4{margin:0 0 8px;font-size:14px;font-weight:600}
 #m2c-zone-label{font-size:12px;color:#6b7280;margin-bottom:8px;max-height:60px;overflow:hidden}
-#m2c-author,#m2c-text{width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;font:14px system-ui,sans-serif;margin-bottom:8px}
-#m2c-text{min-height:64px;resize:vertical}
+#m2c-text{width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:8px;padding:8px 10px;font:14px system-ui,sans-serif;margin-bottom:8px;min-height:64px;resize:vertical}
 #m2c-send{background:#6d28d9;color:#fff;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font:500 14px system-ui,sans-serif}
 #m2c-cancel{background:#f3f4f6;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font:14px system-ui,sans-serif;margin-left:8px}
-#m2c-list{max-height:200px;overflow:auto;border-top:1px solid #eee;margin-top:10px;padding-top:8px}
-.m2c-item{display:flex;gap:8px;margin-bottom:8px;font-size:13px}
-.m2c-item .m2c-del{color:#9ca3af;cursor:pointer;background:none;border:none;padding:0 2px}
-.m2c-item b{color:#6d28d9}
+#m2c-list{max-height:220px;overflow:auto;border-top:1px solid #eee;margin-top:10px;padding-top:8px}
+.m2c-item{display:flex;gap:8px;margin-bottom:8px;font-size:13px;align-items:baseline}
+.m2c-item b{color:#6d28d9;flex-shrink:0}
+.m2c-item span{flex:1;overflow-wrap:anywhere}
+.m2c-item .m2c-del{color:#9ca3af;cursor:pointer;background:none;border:none;padding:0 2px;flex-shrink:0}
 .m2c-zone-on [data-m2c-zone].m2c-hl{outline:2px dashed #6d28d9;outline-offset:-2px;cursor:pointer}
 .m2c-zone-on [data-m2c-zone]:hover{outline:2px solid #10b981;outline-offset:-2px;cursor:pointer}
 #m2c-badge{position:absolute;top:-10px;right:-10px;background:#ef4444;color:#fff;border-radius:999px;min-width:20px;height:20px;font:600 11px/20px system-ui,sans-serif;text-align:center;padding:0 4px;pointer-events:none}
@@ -60,19 +126,24 @@
     btn.onclick = toggleMode;
     document.body.appendChild(btn);
 
+    const who = document.createElement('div');
+    who.id = 'm2c-who';
+    who.textContent = '👤 ' + (state.user ? state.user.name : '');
+    who.title = 'Сменить пользователя (выйти)';
+    who.onclick = () => { localStorage.removeItem('m2c_user'); location.reload(); };
+    document.body.appendChild(who);
+
     const p = document.createElement('div');
     p.id = 'm2c-panel';
     p.innerHTML = `
 <h4 id="m2c-title">Комментарий к зоне</h4>
 <div id="m2c-zone-label"></div>
-<input id="m2c-author" placeholder="Ваше имя" value="${state.author.replace(/"/g, '&quot;')}">
 <textarea id="m2c-text" placeholder="Что уточнить / не так / предложить?"></textarea>
 <button id="m2c-send">Отправить</button><button id="m2c-cancel">Отмена</button>
 <div id="m2c-list"></div>`;
     document.body.appendChild(p);
     p.querySelector('#m2c-send').onclick = send;
     p.querySelector('#m2c-cancel').onclick = closePanel;
-    p.querySelector('#m2c-author').oninput = (e) => { state.author = e.target.value; localStorage.setItem('m2c_author', state.author); };
     ui = { btn, panel: p };
   }
 
@@ -85,7 +156,6 @@
   function zoneId(el) {
     if (el.dataset.m2cZone) return el.dataset.m2cZone;
     let id = el.id || el.tagName.toLowerCase() + '-' + Math.random().toString(36).slice(2, 8);
-    // ids may collide across pages — fine, page_id separates them
     el.dataset.m2cZone = id;
     return id;
   }
@@ -99,7 +169,6 @@
   }
 
   function markZones() {
-    // candidate blocks: sections and direct children of main + footer blocks
     document.querySelectorAll('section, main > div, main > article, footer > div, .card, blockquote, table, form').forEach(el => {
       if (!el.dataset.m2cZone) zoneId(el);
       el.classList.add('m2c-hl');
@@ -108,7 +177,7 @@
 
   function onClick(e) {
     if (!state.on) return;
-    if (e.target.closest('#m2c-panel') || e.target.closest('#m2c-toggle')) return;
+    if (e.target.closest('#m2c-panel') || e.target.closest('#m2c-toggle') || e.target.closest('#m2c-who')) return;
     const zone = e.target.closest('[data-m2c-zone]');
     if (!zone) return;
     e.preventDefault(); e.stopPropagation();
@@ -126,10 +195,10 @@
 
   async function send() {
     const text = ui.panel.querySelector('#m2c-text').value.trim();
-    if (!text) return;
-    const author = state.author || 'Аноним';
+    if (!text || !state.user) return;
+    const author = state.user.name;
     try {
-      await sb.post({ page_id: pageId, zone_id: zoneId(ui.currentZone), zone_label: zoneLabel(ui.currentZone), author, body: text });
+      await sb.post({ page_id: pageId, zone_id: zoneId(ui.currentZone), zone_label: zoneLabel(ui.currentZone), author, body: text, author_verified: true });
       ui.panel.querySelector('#m2c-text').value = '';
       await loadAll(); renderList(zoneId(ui.currentZone)); renderBadges();
     } catch (err) {
@@ -166,9 +235,8 @@
     });
   }
 
-  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
   function init() {
+    buildGate();
     buildUI();
     document.addEventListener('click', onClick, true);
     loadAll();
