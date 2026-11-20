@@ -1,3 +1,7 @@
+node_modules/
+package.json
+package-lock.json
+auth_exec.txt
+members_exec.txt
 .token
-cred2.txt
-readcred2.ps1
+cred*.txt
