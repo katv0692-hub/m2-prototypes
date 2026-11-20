@@ -14,7 +14,9 @@
         headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json', ...(opts.headers || {}) }
       });
       if (!r.ok) throw new Error('Supabase ' + r.status);
-      return r.status === 204 ? null : r.json();
+      if (r.status === 204) return null;
+      const text = await r.text();
+      return text ? JSON.parse(text) : null;
     },
     list: (page, zone) => sb.req('/rest/v1/comments?select=id,author,zone_id,body,created_at,page_id&order=created_at.asc&page_id=eq.' + encodeURIComponent(page) + (zone ? '&zone_id=eq.' + encodeURIComponent(zone) : '')),
     post: (c) => sb.req('/rest/v1/comments', { method: 'POST', body: JSON.stringify(c) }),
