@@ -1,0 +1,14 @@
+<svg width="48.000000" height="48.000000" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip696_46615">
+			<rect id="48х48" width="48.000000" height="48.000000" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clip696_46615)">
+		<path id="Union" d="M42 18.37L24 6L6 18.37L42 18.37ZM42 42L42 18.37L6 18.37L6 42L42 42Z" fill="#FFAF78" fill-opacity="1.000000" fill-rule="evenodd"/>
+		<path id="Union" d="M32.62 25.27L28.76 21.42L22.89 27.31L19.27 23.68L15.43 27.52L19.05 31.15L19.04 31.16L22.9 35.01L32.62 25.27Z" fill="#FF6E2D" fill-opacity="1.000000" fill-rule="evenodd"/>
+	</g>
+</svg>

@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Купить квартиру с М2 — все шаги и итоговая цена</title>
+<meta name="description" content="Проверим квартиру и продавца, подготовим договор, проведём расчёты и регистрацию, защитим покупку на 3 года.">
+<link rel="preload" href="assets/fonts/ALS_Hauss-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ALS_Hauss-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="assets/style.css">
+<style>.hdr-top{justify-content:flex-end}</style>
+<style>.fab{color:#1d1534}.opt:hover,.opt.on{background:#fff!important;color:#3216b5!important;transition:none}.cart-n{color:#4a4660}</style>
+</head>
+<body data-mode="buy">
+
+<!-- ШАПКА -->
+<header class="hdr" id="top">
+  <div class="wrap hdr-in">
+    <a class="logo" href="#top" aria-label="М2 — на главную">
+      <svg width="58" height="52" viewBox="0 0 58 52" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M17 0H58V41H41V52H0V11H17V0Z" fill="#3216B5"/><path d="M44.157 27.392V24.6531H37.5997V24.6298C39.9124 23.6013 43.9483 21.8471 43.9483 18.1997C43.9483 15.3184 41.5538 12.8572 38.1712 12.8572C34.7887 12.8572 33.0611 15.1883 32.3001 17.2899L34.8036 18.2698C35.3685 16.5165 36.363 15.4468 38.1945 15.4468C39.794 15.4468 41.1117 16.6404 40.9809 18.223C40.8122 20.2646 38.6293 21.7447 36.6206 22.8487C35.0867 23.692 32.7112 24.889 32.7112 24.889V27.392H44.157Z" fill="white"/><path d="M12.0522 24.663V38.3574H15.0083V28.0866L19.2383 38.3574H21.4807L25.6344 28.0866V38.3574H28.6158V24.663H24.3094L20.334 34.4851L16.3333 24.663H12.0522Z" fill="white"/></svg>
+    </a>
+    <div class="hdr-rows">
+      <div class="hdr-top">
+        <button class="hdr-help" type="button" data-open-help>Помощь</button>
+      </div>
+      <div class="hdr-main">
+        <div class="tasks">
+          <button class="tasks-btn" type="button" aria-expanded="false" aria-controls="tasksMenu" id="tasksBtn">Что вы хотите сделать?<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" fill="none"/></svg></button>
+          <div class="tasks-menu" id="tasksMenu" role="menu" hidden></div>
+        </div>
+        <nav class="mainnav" aria-label="Продукты">
+          <a href="#top" data-ext="/novostroyki/">Новостройки</a>
+          <a href="#top" data-ext="/ipoteka/vtb/">Ипотека</a>
+          <a href="#top" data-ext="/sdelka/">Сделка</a>
+          <a href="#top" data-ext="/services/">Юридические сервисы</a>
+          <a href="#top" data-ext="/media/">Журнал</a>
+        </nav>
+        <form class="search" id="searchForm" role="search" autocomplete="off">
+          <label for="q" class="sr">Поиск по задаче</label>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2"/></svg>
+          <input id="q" name="q" type="search" placeholder="Поиск">
+          <div class="suggest" id="suggest" hidden></div>
+        </form>
+        <button class="cart-btn" type="button" data-open-cart aria-label="Моя покупка">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a1 1 0 001 .8h9.6a1 1 0 001-.8L20.5 7H6.2" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="9" cy="19.5" r="1.5" fill="currentColor"/><circle cx="17" cy="19.5" r="1.5" fill="currentColor"/></svg>
+          <span class="cart-lbl">Моя покупка</span><span class="cart-n" data-cart-count>0</span>
+        </button>
+        <button class="login-btn" type="button" data-login>
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1C6.262 1 1.55 5.394 1.045 11h10.127L8.879 8.707l1.414-1.414L15 12l-4.707 4.707-1.414-1.414L11.172 13H1.045C1.55 18.607 6.262 23 12 23z" fill="currentColor"/></svg>
+          <span data-login-lbl>Войти</span>
+        </button>
+        <button class="burger" type="button" aria-label="Меню" aria-expanded="false" id="burger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- МОБИЛЬНОЕ МЕНЮ -->
+<div class="mmenu" id="mmenu" hidden>
+  <div class="mmenu-in">
+    <form class="search search-m" id="searchFormM" role="search" autocomplete="off">
+      <label for="qm" class="sr">Поиск по задаче</label>
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2"/></svg>
+      <input id="qm" type="search" placeholder="Что вы хотите сделать?">
+      <div class="suggest" id="suggestM" hidden></div>
+    </form>
+    <p class="mmenu-h">Что вы хотите сделать?</p>
+    <div class="mmenu-tasks" id="mmenuTasks"></div>
+    <p class="mmenu-h">Продукты</p>
+    <div class="mmenu-aud">
+      <a href="#top" data-ext="/novostroyki/">Новостройки</a>
+      <a href="#top" data-ext="/ipoteka/vtb/">Ипотека</a>
+      <a href="#top" data-ext="/sdelka/">Сделка</a>
+      <a href="#top" data-ext="/services/">Юридические сервисы</a>
+      <a href="#top" data-ext="/media/">Журнал</a>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="crumbs wrap"><a href="#top" data-ext="/">Главная</a><span>/</span><span>Купить квартиру с М2</span></div>
+
+  <!-- ПЕРВЫЙ ЭКРАН -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap hero-in">
+      <div class="hero-text">
+        <div class="modes" role="tablist" aria-label="Режим страницы">
+          <button role="tab" type="button" data-mode-btn="buy" aria-selected="true">Покупаю</button>
+          <button role="tab" type="button" data-mode-btn="sell" aria-selected="false">Продаю</button>
+          <button role="tab" type="button" data-mode-btn="pro" aria-selected="false">Я риелтор</button>
+        </div>
+
+        <div data-show="buy">
+          <h1 id="h1">Купите вторичку спокойно — от проверки до ключей с М2</h1>
+          <p class="lead">М2 проверит квартиру, сохранит деньги до регистрации и защитит покупку на 3 года.</p>
+          <ul class="facts">
+            <li>Деньги на <button type="button" class="term" data-term="spec">спецсчёте</button> ВТБ до регистрации</li>
+            <li>Регистрация без МФЦ</li>
+            <li>Гарантия 3 года — в «Сделке под ключ»</li>
+          </ul>
+          <a class="btn btn-l" href="#nabory">Выбрать набор</a>
+          <p class="under">Вход по телефону. Оплатить сейчас или забронировать дату сделки</p>
+        </div>
+
+        <div data-show="sell" hidden>
+          <h1 class="h1-long">Продайте квартиру и получите деньги после регистрации</h1>
+          <p class="lead">Деньги лежат на спецсчёте ВТБ и придут вам после регистрации.</p>
+          <div class="btn-row">
+            <button class="btn btn-l" type="button" data-add="sbr" data-open-after>Создать сделку продажи</button>
+            <button class="lnk" type="button" data-ext="/sdelka/?role=seller">Подробнее для продавца</button>
+          </div>
+        </div>
+
+        <div data-show="pro" hidden>
+          <h1>Клиенту — спокойная покупка, вам — сделка в одном кабинете</h1>
+          <p class="lead">Клиент подтверждает по ссылке, вы видите каждый шаг сделки.</p>
+          <ul class="facts">
+            <li>Сервисы в сделке оплачивает клиент</li>
+            <li>Партнёрские цены — после входа</li>
+          </ul>
+          <div class="btn-row">
+            <button class="btn btn-l" type="button" onclick="document.getElementById('calcAdd').click()">Добавить в покупку</button>
+            <button class="lnk" type="button" data-pro-login>Войти как риелтор</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <img src="assets/img/interior.jpg" alt="Светлая гостиная с обеденным столом у окна" width="800" height="800">
+        <div class="calc" data-ui id="calc">
+          <div>
+            <h2 class="calc-h">Сколько стоит ваша квартира</h2>
+            <label class="fld"><span>Цена квартиры</span>
+              <input type="text" inputmode="numeric" id="flatPrice" value="9 500 000" aria-describedby="flatNote"><em>₽</em></label>
+            <label class="sw" data-show="buy"><input type="checkbox" id="ipoSw"><span class="sw-t" aria-hidden="true"></span><span>В ипотеку</span></label>
+            <div class="calc-list" id="calcList" role="radiogroup" aria-label="Набор"></div>
+            <p class="calc-pp" id="calcPP" hidden>Партнёрские цены — после входа</p>
+            <p class="calc-note" id="flatNote">Цены одинаковые в офисе банка и дистанционно.</p>
+            <div class="calc-btns"><button type="button" class="btn" id="calcOrder">Оформить</button><button type="button" class="btn btn-sec" id="calcAdd">Добавить в покупку</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДОВЕРИЕ -->
+  <section class="trust" aria-labelledby="trustH">
+    <div class="wrap">
+      <h2 id="trustH" class="sr">Почему М2</h2>
+      <ul class="trust-row">
+        <li><b>Больше 1,5 млн</b><span>сделок за 6 лет</span></li>
+        <li><b>ВТБ</b><span>сделки проводятся с банком ВТБ</span></li>
+        <li><b>45 000</b><span>объектов уже проверены юристами <em>Защита сделки</em></span></li>
+        <li><b>15 000+</b><span>сделок прошли с нашей юридической гарантией <em>Защита сделки</em></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- РИЕЛТОР: СВЁРНУТОЕ ОБЪЯСНЕНИЕ -->
+  <div class="wrap pro-fold" data-show="pro" hidden>
+    <button type="button" class="fold-btn" id="proFold" aria-expanded="false">Как объяснить клиенту — показать</button>
+  </div>
+
+  <!-- ЛЕНТА ЭТАПОВ -->
+  <section class="sec ribbon-sec" id="etapy" aria-labelledby="etapyH" data-explain>
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="etapyH" data-show="buy pro">Как проходит покупка квартиры</h2>
+        <h2 data-show="sell" hidden>Как проходит продажа квартиры</h2>
+        <p class="sec-sub" data-show="buy pro">На каждом этапе — понятный шаг и сервис М2.</p>
+        <p class="sec-sub" data-show="sell" hidden>Четыре этапа от договора до денег на вашем счёте.</p>
+      </div>
+      <ol class="ribbon" id="ribbon"></ol>
+    </div>
+  </section>
+
+  <!-- ДЕНЬГИ ПРОДАВЦУ (в режиме «Продаю» — вторым блоком) -->
+  <section class="sec money" id="dengi" aria-labelledby="dengiH">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="dengiH">Деньги продавцу: когда и как</h2></div>
+      <div class="money-grid">
+        <div><h3>Срок</h3><p>До трёх рабочих дней после регистрации — зависит от банка.</p></div>
+        <div><h3>Документ</h3><p>Документ о переводе — в кабинете.</p></div>
+        <div><h3>Кто отвечает</h3><p>Ваш менеджер М2 — он сам на связи с банком.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПОДБОР И НАБОРЫ -->
+  <section class="sec sec-grey" id="nabory" aria-labelledby="naboryH">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="naboryH" data-show="buy">Наборы услуг для покупки</h2>
+        <h2 data-show="sell" hidden>Набор для продажи</h2>
+        <h2 data-show="pro" hidden>Наборы услуг для сделки</h2>
+        <p class="sec-sub" data-show="buy">Каждый следующий включает предыдущий.</p>
+        <p class="sec-sub" data-show="pro" hidden>Сервисы в сделке оплачивает клиент. После входа с ролью «Риелтор» цены в покупке меняются на партнёрские.</p>
+        <div class="modes modes-sets" role="tablist" aria-label="Цены для">
+          <button role="tab" type="button" data-mode-btn="buy" aria-selected="true">Покупаю</button>
+          <button role="tab" type="button" data-mode-btn="sell" aria-selected="false">Продаю</button>
+          <button role="tab" type="button" data-mode-btn="pro" aria-selected="false">Я риелтор</button>
+        </div>
+      </div>
+      <div class="sets-layout">
+        <div class="picker" id="podbor" data-show="buy" data-explain data-ui>
+          <h3 class="picker-h">Подберём набор за 3 вопроса</h3>
+          <div class="picker-body" id="picker"></div>
+        </div>
+        <div class="sets" id="sets"></div>
+      </div>
+      <p class="dkp-line" data-show="buy pro">Договор от юристов М2 — плюс 3 000 ₽, со Сделкой или Защитой сделки <button type="button" class="lnk" data-add="dkp">Добавить в покупку</button></p>
+      <p class="dkp-line" data-show="buy">В ипотеку? Заявка в ВТБ через М2 — бесплатно, ставку назначает банк <button type="button" class="lnk" data-add="ipo">Добавить в покупку</button></p>
+      <p class="dkp-line" data-show="buy sell">С риелтором? Он оформит набор в своём кабинете, вы увидите каждый шаг <button type="button" class="lnk" id="shareRealtor">Скопировать ссылку для риелтора</button></p>
+      <div class="invite" data-show="sell" hidden>
+        <h3>Пригласить покупателя</h3>
+        <p>Отправьте покупателю ссылку — по ней он присоединится к сделке.</p>
+        <button type="button" class="btn btn-sec" id="inviteBtn">Скопировать ссылку-приглашение</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec sec-grey" id="faq" aria-labelledby="faqH">
+    <div class="wrap faq-in">
+      <div>
+        <h2 id="faqH">Что спрашивают чаще всего</h2>
+        <p class="faq-law">Нужно разобрать документы? <button type="button" class="lnk" data-add="consult">Консультация юриста — 3 000 ₽</button></p>
+      </div>
+      <div class="faq" id="faqList"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ПОДВАЛ -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div>
+        <p class="ftr-h">Частным лицам</p>
+        <a href="#top">Купить квартиру с М2</a>
+        <a href="#nabory">Цены</a>
+        <a href="#top" data-ext="/services/checkup/">Проверка квартиры</a>
+        <a href="#top" data-ext="/services/guaranteed-deal/">Защита сделки</a>
+        <a href="#top" data-ext="/sdelka/">Сделка</a>
+        <a href="#top" data-ext="/ipoteka/vtb/">Ипотека ВТБ</a>
+      </div>
+      <div>
+        <p class="ftr-h">Риелторам и агентствам</p>
+        <a href="#top" data-ext="/rieltoram/">Сервисы для риелторов</a>
+        <a href="#top" data-ext="/rieltoram/m2pro-novostroyki/">Новостройки в M2Pro</a>
+        <a href="#top" data-ext="/about/">О компании</a>
+      </div>
+      <div class="ftr-ch">
+        <p class="ftr-h">Связаться</p>
+        <a href="#top" data-ch="max"><b>MAX</b> — частным лицам</a>
+        <a href="#top" data-ch="max-pro"><b>MAX</b> — риелторам</a>
+        <a href="#top" data-ch="vk"><b>ВКонтакте</b> — бот ответит сразу</a>
+        <a href="#top" data-ch="tg"><b>Telegram</b> — новости и разборы</a>
+        <a href="#top" data-ch="call"><b>+7 495 136-28-18</b> — круглосуточно</a>
+        <a href="#top" data-ch="mail"><b>support@team-m2.ru</b></a>
+      </div>
+    </div>
+    <div class="ftr-bot">
+      <span>© М2 — экосистема недвижимости</span>
+      <a href="../index.html">Все страницы прототипа</a>
+      <span>Прототип страницы: данные кабинета и заказов — пример</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ЛИПКАЯ КНОПКА (телефон) -->
+<div class="sticky" id="sticky"><button type="button" class="btn btn-l" id="stickyBtn">Выбрать набор</button></div>
+
+<!-- ЕСТЬ ВОПРОС -->
+<button type="button" class="fab" data-open-help id="fab">Есть вопрос?</button>
+
+<!-- ПАНЕЛЬ СВЯЗИ -->
+<div class="layer" id="help" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel panel-help" role="dialog" aria-modal="true" aria-labelledby="helpH" data-ui>
+    <button type="button" class="x" data-close aria-label="Закрыть">×</button>
+    <h2 id="helpH">Ответим там, где вам удобно</h2>
+    <p class="p-sub">О чём вопрос?</p>
+    <div class="chips" id="helpTopics">
+      <button type="button" class="chip on">Вопрос до покупки</button>
+      <button type="button" class="chip">Моя сделка или заявка</button>
+      <button type="button" class="chip">Я риелтор</button>
+      <button type="button" class="chip">Не получается войти</button>
+    </div>
+    <p class="p-sub">Как удобнее</p>
+    <div class="help-ch">
+      <button type="button" class="ch-row" data-ch="max"><b>Написать в MAX</b><span>MAX — частным лицам</span></button>
+      <button type="button" class="ch-row" data-ch="vk"><b>Написать во ВКонтакте</b><span>Бот ответит сразу</span></button>
+      <button type="button" class="ch-row" data-ch="call"><b>Позвонить</b><span>+7 495 136-28-18 — круглосуточно</span></button>
+      <button type="button" class="ch-row" data-ch="mail"><b>Прислать на почту</b><span>support@team-m2.ru</span></button>
+    </div>
+    <p class="help-note" id="helpNote" hidden></p>
+  </div>
+</div>
+
+<!-- ОТВЕТ ПОИСКА / ВНЕШНЯЯ СТРАНИЦА -->
+<div class="layer" id="answer" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel panel-answer" role="dialog" aria-modal="true" aria-labelledby="ansH" data-ui>
+    <button type="button" class="x" data-close aria-label="Закрыть">×</button>
+    <div id="ansBody"></div>
+  </div>
+</div>
+
+<!-- КОРЗИНА -->
+<div class="layer layer-drawer" id="cart" hidden>
+  <div class="scrim" data-close></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartH" data-ui>
+    <div class="dr-head">
+      <h2 id="cartH">Моя покупка</h2>
+      <button type="button" class="x" data-close aria-label="Закрыть">×</button>
+    </div>
+    <span class="badge-build">Строим на конструкторе платформы сделки в ЛК</span>
+    <div class="dr-body" id="drBody"></div>
+  </aside>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="assets/app.js"></script>
+<script>/* Общая корзина между страницами: состав передаётся в ?cart=, без localStorage */
+(function(){var K=['express','lawyer','consult','zs','er','sbr','turnkey','dkp','ipo'];
+function shut(L){L.classList.remove('open');L.hidden=true;document.documentElement.classList.remove('locked')}
+function fire(a,v){var b=document.createElement('button');b.type='button';b.hidden=true;b.setAttribute(a,v||'');document.body.appendChild(b);b.click();b.remove()}
+function keys(){var L=document.getElementById('cart');if(!L)return[];var o=!L.hidden;if(o&&document.querySelector('#drBody [data-rm]')){}else{fire('data-open-cart');}
+var k=[].map.call(document.querySelectorAll('#drBody [data-rm]'),function(x){return x.dataset.rm});if(!o)shut(L);return k}
+var p=new URLSearchParams(location.search).get('cart');
+if(p){var L=document.getElementById('cart');p.split(',').filter(function(k,i,a){return K.indexOf(k)>=0&&a.indexOf(k)===i}).forEach(function(k){fire('data-add',k)});if(L)shut(L);var t=document.getElementById('toast');if(t){t.hidden=true;t.classList.remove('show')}}
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a||a.hasAttribute('data-ext'))return;var h=a.getAttribute('href');if(!h||h.charAt(0)==='#'||/^(mailto|tel):/.test(h))return;
+var u=new URL(a.href,location.href);if(u.origin!==location.origin&&u.hostname!=='www.perplexity.ai')return;if(u.pathname===location.pathname)return;
+var k=keys();if(k.length)u.searchParams.set('cart',k.join(','));else u.searchParams.delete('cart');a.href=u.toString()},true);})();</script>
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://perplexity.localhost","http://localhost:1420","http://127.0.0.1:1420","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  const DEFAULT_LINE_HEIGHT = 16;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  const PICK_CAPABILITIES = ["pick"];
+  const PICK_CHAIN_LENGTH = 4;
+  const PICK_MAX_TEXT_CHARS = 120;
+  const PICK_MAX_HTML_CHARS = 300;
+
+  function truncate(value, maxChars) {
+    return value.length > maxChars ? value.slice(0, maxChars - 1) + "…" : value;
+  }
+
+  function isPickableElement(element) {
+    return (
+      element instanceof Element &&
+      element !== document.documentElement &&
+      element !== document.body
+    );
+  }
+
+  function resolvePickTarget(x, y) {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+    const element = document.elementFromPoint(x, y);
+    return isPickableElement(element) ? element.closest("svg") || element : null;
+  }
+
+  function pickLabel(element) {
+    if (element.id) return element.localName + "#" + element.id;
+    return [element.localName].concat(Array.from(element.classList).slice(0, 2)).join(".");
+  }
+
+  // Only attributes that help find the element in source. data-* values and URL
+  // query strings or fragments can carry tokens.
+  const PICK_ATTRIBUTES = new Set([
+    "id",
+    "class",
+    "name",
+    "type",
+    "role",
+    "alt",
+    "aria-label",
+    "href",
+    "src",
+  ]);
+
+  function pickAttributeValue(attribute) {
+    return attribute.name === "href" || attribute.name === "src"
+      ? attribute.value.split(/[?#]/)[0]
+      : attribute.value;
+  }
+
+  function describePickElement(element) {
+    const chain = [];
+    for (
+      let current = element;
+      isPickableElement(current) && chain.length < PICK_CHAIN_LENGTH;
+      current = current.parentElement
+    ) {
+      chain.unshift(current);
+    }
+    const attributes = Array.from(element.attributes)
+      .filter((attribute) => PICK_ATTRIBUTES.has(attribute.name))
+      .map((attribute) => ` ${attribute.name}="${pickAttributeValue(attribute).replace(/"/g, "&quot;")}"`)
+      .join("");
+    const text = (element.innerText || element.textContent || "").replace(/\s+/g, " ").trim();
+    return {
+      chain: chain.map(pickLabel),
+      html: truncate(`<${element.localName}${attributes}>`, PICK_MAX_HTML_CHARS),
+      text: text ? truncate(text, PICK_MAX_TEXT_CHARS) : undefined,
+    };
+  }
+
+  // Hover asks once per frame, and innerText on a large section forces layout,
+  // so only the rect is re-read while the pointer stays on the same element.
+  // Clicks ask for fresh details since the page may have changed the element.
+  let lastPick = null;
+
+  function describePickTarget(element, fresh) {
+    if (fresh || lastPick?.element !== element) {
+      lastPick = { element, details: describePickElement(element) };
+    }
+    const rect = element.getBoundingClientRect();
+    return {
+      rect: { x: rect.left, y: rect.top, width: rect.width, height: rect.height },
+      ...lastPick.details,
+    };
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+      capabilities: PICK_CAPABILITIES,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_PICK") {
+      const element = resolvePickTarget(event.data.x, event.data.y);
+      postToTrustedTop({
+        type: "INLINE_EDIT_PICK_RESULT",
+        seq: event.data.seq,
+        target: element ? describePickTarget(element, event.data.fresh === true) : null,
+      });
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_BY") {
+      const { deltaX, deltaY, deltaMode } = event.data;
+      if (!scrollForwarding || !Number.isFinite(deltaX) || !Number.isFinite(deltaY)) return;
+      if (deltaMode !== 0 && deltaMode !== 1 && deltaMode !== 2) return;
+      const lineHeight =
+        parseFloat(getComputedStyle(document.documentElement).lineHeight) || DEFAULT_LINE_HEIGHT;
+      const scaleX = deltaMode === 1 ? lineHeight : deltaMode === 2 ? window.innerWidth : 1;
+      const scaleY = deltaMode === 1 ? lineHeight : deltaMode === 2 ? window.innerHeight : 1;
+      // The selection overlay receives the wheel event instead of this iframe.
+      // Instant scrolling preserves trackpad deltas even on smooth-scroll sites.
+      window.scrollBy({ left: deltaX * scaleX, top: deltaY * scaleY, behavior: "instant" });
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script><script src="../assets/m2-comments.js"></script>
+</body>
+</html>
