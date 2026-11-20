@@ -26,7 +26,7 @@
   const state = { on: false, comments: [], author: localStorage.getItem('m2c_author') || '' };
   let ui = {};
 
-  const pageId = (location.pathname.replace(/\/index\.html$/, '').replace(/^\//, '') || 'index').replace(/\//g, '-');
+  const pageId = (location.pathname.replace(/\/index\.html$/, '').replace(/^\/|\/$/g, '') || 'index').replace(/\//g, '-');
 
   /* ---------- UI ---------- */
   function buildUI() {
